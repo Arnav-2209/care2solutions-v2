@@ -1,5 +1,4 @@
 import HeroSection from '../sections/HeroSection';
-import ServicesSection from '../sections/ServicesSection';
 import StatsSection from '../sections/StatsSection';
 import AboutSection from '../sections/AboutSection';
 import ResourcesSection from '../sections/ResourcesSection';
@@ -18,9 +17,8 @@ export default function HomePage() {
     <main>
       <HeroSection
         onBookConsultation={() => scrollToSection('contact')}
-        onGetFreeAudit={() => scrollToSection('audit-quote')}
+        onGetFreeAudit={() => scrollToSection('faq')}
       />
-      <ServicesSection />
       <StatsSection />
       <AboutSection />
       <ResourcesSection />

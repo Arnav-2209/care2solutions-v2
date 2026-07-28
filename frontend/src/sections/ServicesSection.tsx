@@ -1,134 +1,422 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import styles from './ServicesSection.module.css';
 
-// ── Icons ─────────────────────────────────────────────────────
+/* ============================================================
+   Inline SVG Icons
+   ============================================================ */
 
-const BillingIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="3" y="4" width="16" height="14" rx="2" />
-    <path d="M7 8h8M7 12h5" />
-    <path d="M14 15v-3a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v3" />
+const CheckIcon = () => (
+  <svg viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M2 5.5l2.5 2.5 5-5" />
   </svg>
 );
 
-const TranscriptionIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M11 3a3 3 0 0 1 3 3v4a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z" />
-    <path d="M5 10a6 6 0 0 0 12 0" />
-    <path d="M11 16v3M8 19h6" />
+const ArrowRightIcon = () => (
+  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 7h8M7 3l4 4-4 4" />
   </svg>
 );
 
-const CredentialingIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M11 2L3 6v5c0 4.4 3.4 8.5 8 9.5C16.6 19.5 20 15.4 20 11V6L11 2z" />
-    <path d="M8 11l2 2 4-4" />
+const ShieldIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M8 1.5L2 4v4.5c0 3 2.5 5.5 6 6.5 3.5-1 6-3.5 6-6.5V4L8 1.5z" />
+    <path d="M5.5 8l2 2 3.5-4" />
   </svg>
 );
 
-const RcmIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 17l5-5 4 4 7-9" />
-    <circle cx="17" cy="6" r="2" />
+const CodeIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M5 4L1 8l4 4M11 4l4 4-4 4" />
   </svg>
 );
 
-const DenialIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="8" />
-    <path d="M11 7v4l3 3" />
+const FileTextIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M3 2h7l4 4v8a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z" />
+    <path d="M9 2v4h4M5 8h6M5 11h4" />
   </svg>
 );
 
-const AnalyticsIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <rect x="3" y="12" width="4" height="7" rx="1" />
-    <rect x="9" y="8" width="4" height="11" rx="1" />
-    <rect x="15" y="4" width="4" height="15" rx="1" />
+const SendIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M14 2L7 9M14 2L9 14l-2-5-5-2 12-5z" />
   </svg>
 );
 
-const ArrowIcon = () => (
-  <svg viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M2 6.5h9M7 2.5l4 4-4 4" />
+const ClockIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="8" cy="8" r="6" />
+    <path d="M8 5v3l2 2" />
   </svg>
 );
 
-// ── Data ──────────────────────────────────────────────────────
+const DollarIcon = () => (
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="8" cy="8" r="6" />
+    <path d="M8 4v8M6 6h3a1 1 0 0 1 0 2H6.5a1 1 0 0 0 0 2H9" />
+  </svg>
+);
 
-const SERVICES = [
+/* ============================================================
+   RCM Storytelling Steps Data
+   ============================================================ */
+
+interface StepData {
+  id: string;
+  stepNum: string;
+  title: string;
+  description: string;
+  benefits: string[];
+  dashTitle: string;
+  dashIcon: React.ReactNode;
+  kpiVal: string;
+  kpiLabel: string;
+  rows: { label: string; sub: string; tag: string; tagBg: string; tagColor: string }[];
+  progressPct: number;
+}
+
+const STEPS: StepData[] = [
   {
-    icon: <BillingIcon />,
+    id: 'step-01',
+    stepNum: 'STEP 01',
+    title: 'Eligibility Verification',
+    description: 'Verify patient insurance eligibility before treatment to reduce billing issues, prevent coverage claim rejections, and accelerate reimbursements.',
+    benefits: [
+      'Reduce Claim Rejections',
+      'Faster Approvals',
+      'Better Patient Experience',
+    ],
+    dashTitle: 'Insurance Eligibility Engine',
+    dashIcon: <ShieldIcon />,
+    kpiVal: '99.4%',
+    kpiLabel: 'Verified Pre-Care',
+    rows: [
+      { label: 'Medicare & Commercial Payer Lookup', sub: 'Real-Time 270/271 Query', tag: '✓ Active Coverage', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'Copay & Deductible Verification', sub: '$25 Copay · $500 Deductible Met', tag: 'Verified', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'Prior Authorization Check', sub: 'Procedure Pre-Approved', tag: 'Approved', tagBg: 'rgba(99,102,241,0.10)', tagColor: '#4F46E5' },
+    ],
+    progressPct: 100,
+  },
+  {
+    id: 'step-02',
+    stepNum: 'STEP 02',
+    title: 'Medical Coding',
+    description: 'Certified AAPC coders assign precise ICD-10, CPT, and HCPCS codes to maximize clean claim acceptance and minimize audit risk.',
+    benefits: [
+      'AAPC Certified Coders',
+      'Reduced Compliance Audit Risk',
+      'Specialty-Specific Coding',
+    ],
+    dashTitle: 'AAPC Certified Coding Desk',
+    dashIcon: <CodeIcon />,
+    kpiVal: '99.8%',
+    kpiLabel: 'Coding Accuracy',
+    rows: [
+      { label: 'ICD-10 & CPT Code Scrubbing', sub: 'Automated Rule Engine Matrix', tag: 'Scrubbed Clean', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'Modifier Optimization', sub: 'Modifier 25 & 59 Validation', tag: 'Optimized', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'Compliance Audit Check', sub: 'Documentation Compliant', tag: 'Audit Passed', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+    ],
+    progressPct: 100,
+  },
+  {
+    id: 'step-03',
+    stepNum: 'STEP 03',
     title: 'Medical Billing',
-    description: 'End-to-end claim submission, follow-up, and payment posting. We minimize denials and accelerate your cash flow with proven workflows.',
-    id: 'medical-billing',
+    description: 'End-to-end charge capture and billing workflows tailored to primary care, surgical centers, and 40+ medical specialties.',
+    benefits: [
+      'Charge Capture Audit',
+      'Multi-Specialty Billing',
+      'HIPAA-Compliant Data Pipeline',
+    ],
+    dashTitle: 'Multi-Specialty Charge Capture',
+    dashIcon: <FileTextIcon />,
+    kpiVal: '$12.4M',
+    kpiLabel: 'Billed Monthly',
+    rows: [
+      { label: 'Encounter to Claim Batching', sub: '2,480 Encounters Prepared', tag: 'Batch Processed', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'Fee Schedule Alignment', sub: 'Optimal Reimbursement Rate', tag: 'Aligned', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'Unbilled Encounter Scrub', sub: 'Zero Missing Encounters', tag: '100% Captured', tagBg: 'rgba(99,102,241,0.10)', tagColor: '#4F46E5' },
+    ],
+    progressPct: 100,
   },
   {
-    icon: <TranscriptionIcon />,
-    title: 'Medical Transcription',
-    description: 'Accurate, HIPAA-compliant transcription services with fast turnaround. Audio to structured clinical documentation at scale.',
-    id: 'transcription',
+    id: 'step-04',
+    stepNum: 'STEP 04',
+    title: 'Claims Submission',
+    description: 'Electronic claim scrubbing and submission with real-time tracking across 200+ commercial and government payers.',
+    benefits: [
+      'Electronic Scrubbing',
+      '200+ Commercial & Govt Payers',
+      'Real-Time Status Tracking',
+    ],
+    dashTitle: 'EDI 837 Electronic Clearinghouse',
+    dashIcon: <SendIcon />,
+    kpiVal: '98.2%',
+    kpiLabel: 'First-Pass Acceptance',
+    rows: [
+      { label: 'Direct Clearinghouse Transmission', sub: '200+ Payer Connections', tag: 'Transmitted', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'EDI 277 Payer Acknowledgement', sub: 'Claim Accepted by Payer', tag: 'Payer Accepted', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'Rejection Queue Scrubber', sub: '0 Unresolved Rejections', tag: 'Queue Clear', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+    ],
+    progressPct: 100,
   },
   {
-    icon: <CredentialingIcon />,
-    title: 'Provider Credentialing',
-    description: 'Streamlined enrollment and credentialing with Medicare, Medicaid, and 200+ commercial payers. Avoid delays that cost revenue.',
-    id: 'credentialing',
+    id: 'step-05',
+    stepNum: 'STEP 05',
+    title: 'Accounts Receivable Follow-up',
+    description: 'Proactive denial management and energetic AR follow-up to recover lost revenue and slash average days in AR.',
+    benefits: [
+      'Dedicated AR Specialists',
+      'Appeals & Denial Management',
+      'Faster Cash Flow',
+    ],
+    dashTitle: 'Denial Management & AR Recovery',
+    dashIcon: <ClockIcon />,
+    kpiVal: '28 Days',
+    kpiLabel: 'Avg AR (Industry: 45)',
+    rows: [
+      { label: 'Appeals & Denial Overturn', sub: 'Medical Necessity Appeal Won', tag: '+$142K Recovered', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'AR Aging Matrix Scrub', sub: '85% Paid Under 30 Days', tag: 'Low Aging', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'Payer Follow-up Priority', sub: 'High-Value Claims Worked First', tag: 'Priority Active', tagBg: 'rgba(245,158,11,0.10)', tagColor: '#D97706' },
+    ],
+    progressPct: 100,
   },
   {
-    icon: <RcmIcon />,
-    title: 'Revenue Cycle Management',
-    description: 'Full-spectrum RCM from patient registration to final payment. We optimize every step to maximize your net collection rate.',
-    id: 'rcm',
-  },
-  {
-    icon: <DenialIcon />,
-    title: 'Denial Management',
-    description: 'Proactive denial prevention and expert appeal management. Our team recovers revenue that would otherwise be written off.',
-    id: 'denial-management',
-  },
-  {
-    icon: <AnalyticsIcon />,
-    title: 'Revenue Analytics',
-    description: 'Real-time dashboards and KPI reporting that give leadership clear visibility into financial performance and trends.',
-    id: 'analytics',
+    id: 'step-06',
+    stepNum: 'STEP 06',
+    title: 'Payment Posting',
+    description: 'Accurate ERA/EOB payment posting, ledger reconciliation, and automated patient billing statements with 100% precision.',
+    benefits: [
+      'Automated ERA/EOB Reconciliation',
+      'Zero Balance Discrepancies',
+      'Comprehensive Revenue Analytics',
+    ],
+    dashTitle: 'ERA / EOB Payment Reconciliation',
+    dashIcon: <DollarIcon />,
+    kpiVal: '99.1%',
+    kpiLabel: 'Net Collection Rate',
+    rows: [
+      { label: '835 ERA Auto-Match', sub: 'Electronic Remittance Auto-Posted', tag: 'Auto-Matched', tagBg: 'rgba(16,185,129,0.10)', tagColor: '#059669' },
+      { label: 'EFT Deposit Reconciliation', sub: 'Bank Deposit & Ledger Balanced', tag: '100% Balanced', tagBg: 'rgba(15,76,129,0.10)', tagColor: '#0F4C81' },
+      { label: 'Patient Statement Dispatch', sub: 'Clear Balance Statements Sent', tag: 'Dispatched', tagBg: 'rgba(99,102,241,0.10)', tagColor: '#4F46E5' },
+    ],
+    progressPct: 100,
   },
 ];
 
-// ── Component ─────────────────────────────────────────────────
+/* ============================================================
+   ServicesSection Component
+   ============================================================ */
 
 export default function ServicesSection() {
+  const [activeStepIndex, setActiveStepIndex] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // IntersectionObserver to set active step at 55% viewport height
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -45% 0px',
+      threshold: 0.55,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = stepRefs.current.findIndex((ref) => ref === entry.target);
+          if (index !== -1) {
+            setActiveStepIndex(index);
+          }
+        }
+      });
+    }, observerOptions);
+
+    stepRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const activeStep = STEPS[activeStepIndex];
+  const progressHeightPct = ((activeStepIndex + 1) / STEPS.length) * 100;
+
+  const scrollToContact = () => {
+    const el = document.getElementById('contact');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="services" className={styles.section} aria-labelledby="services-heading">
       <div className={styles.container}>
 
+        {/* ── Section Header ───────────────────────────────────── */}
         <header className={styles.header}>
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} aria-hidden="true" />
-            What We Do
+            Revenue Cycle Lifecycle
           </div>
           <h2 id="services-heading" className={styles.title}>
-            Complete RCM Solutions,{' '}
-            <span className={styles.titleAccent}>One Trusted Partner</span>
+            Complete Revenue Cycle{' '}
+            <span className={styles.titleAccent}>Management</span>
           </h2>
           <p className={styles.subtitle}>
-            From billing to analytics, we handle the full revenue lifecycle — so your staff can
-            focus on delivering exceptional patient care.
+            From patient registration to final reimbursement, Care2Solutions manages every step of
+            your healthcare revenue cycle with accuracy, security, and efficiency.
           </p>
         </header>
 
-        <div className={styles.grid} role="list">
-          {SERVICES.map((svc) => (
-            <article key={svc.id} className={styles.card} role="listitem">
-              <div className={styles.iconWrap} aria-hidden="true">
-                {svc.icon}
-              </div>
-              <h3 className={styles.cardTitle}>{svc.title}</h3>
-              <p className={styles.cardDesc}>{svc.description}</p>
-              <button className={styles.cardLink} aria-label={`Learn more about ${svc.title}`}>
-                Learn more <ArrowIcon />
-              </button>
-            </article>
-          ))}
+        {/* ── Sticky Storytelling Layout ───────────────────────── */}
+        <div className={styles.storyLayout}>
+
+          {/* ── LEFT: Sticky Panel (Desktop Sticky 42%) ────────── */}
+          <div className={styles.leftStickyCol}>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStep.id}
+                className={styles.dashCard}
+                initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -15, scale: 0.98 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {/* Header */}
+                <div className={styles.dashHeader}>
+                  <div className={styles.dashHeaderTitle}>
+                    <div className={styles.dashHeaderIcon}>
+                      {activeStep.dashIcon}
+                    </div>
+                    {activeStep.dashTitle}
+                  </div>
+                  <span className={styles.dashStepBadge}>
+                    {activeStep.stepNum} OF 06
+                  </span>
+                </div>
+
+                {/* KPI Card */}
+                <div className={styles.kpiCard}>
+                  <div>
+                    <div className={styles.kpiLabel}>{activeStep.kpiLabel}</div>
+                    <div className={styles.kpiVal}>{activeStep.kpiVal}</div>
+                  </div>
+                  <span className={styles.kpiStatus}>
+                    ✓ System Active
+                  </span>
+                </div>
+
+                {/* Workflow Graphic Body */}
+                <div className={styles.graphicBody}>
+                  {activeStep.rows.map((r, i) => (
+                    <motion.div
+                      key={r.label}
+                      className={styles.graphicRow}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.35, delay: 0.08 * i }}
+                    >
+                      <div>
+                        <div className={styles.graphicRowLabel}>{r.label}</div>
+                        <div className={styles.graphicRowSub}>{r.sub}</div>
+                      </div>
+                      <span
+                        className={styles.graphicTag}
+                        style={{ background: r.tagBg, color: r.tagColor }}
+                      >
+                        {r.tag}
+                      </span>
+                    </motion.div>
+                  ))}
+
+                  {/* Step Progress Line */}
+                  <div style={{ marginTop: '4px' }}>
+                    <div className={styles.progressBarTrack}>
+                      <motion.div
+                        className={styles.progressBarFill}
+                        initial={{ width: '0%' }}
+                        animate={{ width: `${activeStep.progressPct}%` }}
+                        transition={{ duration: 0.6 }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          {/* ── RIGHT: Scroll Column (58%) ──────────────────────── */}
+          <div className={styles.rightScrollCol}>
+
+            {/* Vertical Timeline Track */}
+            <div className={styles.timelineTrack}>
+              <div
+                className={styles.timelineProgress}
+                style={{ height: `${progressHeightPct}%` }}
+              />
+            </div>
+
+            {/* 6 Step Blocks */}
+            {STEPS.map((step, idx) => {
+              const isActive = idx === activeStepIndex;
+              return (
+                <div
+                  key={step.id}
+                  ref={(el) => { stepRefs.current[idx] = el; }}
+                  className={`${styles.stepBlock} ${isActive ? styles.active : ''}`}
+                >
+                  {/* Timeline node */}
+                  <div className={styles.stepNode} aria-hidden="true" />
+
+                  {/* Step tag */}
+                  <div className={styles.stepNumber}>{step.stepNum}</div>
+
+                  {/* Large Heading */}
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+
+                  {/* Short Description */}
+                  <p className={styles.stepDesc}>{step.description}</p>
+
+                  {/* Mobile Graphic (visible on mobile only) */}
+                  <div className={styles.mobileGraphic}>
+                    <div className={styles.kpiCard} style={{ marginBottom: '12px' }}>
+                      <div>
+                        <div className={styles.kpiLabel}>{step.kpiLabel}</div>
+                        <div className={styles.kpiVal}>{step.kpiVal}</div>
+                      </div>
+                      <span className={styles.kpiStatus}>✓ Active</span>
+                    </div>
+                  </div>
+
+                  {/* Key Benefits */}
+                  <ul className={styles.benefitsList} aria-label={`Key benefits for ${step.title}`}>
+                    {step.benefits.map((b) => (
+                      <li key={b} className={styles.benefitItem}>
+                        <span className={styles.benefitCheck} aria-hidden="true">
+                          <CheckIcon />
+                        </span>
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* CTA Button */}
+                  <button
+                    className={styles.stepCta}
+                    onClick={scrollToContact}
+                    aria-label={`Learn more about ${step.title}`}
+                  >
+                    Learn More <ArrowRightIcon />
+                  </button>
+
+                </div>
+              );
+            })}
+
+          </div>
+
         </div>
 
       </div>

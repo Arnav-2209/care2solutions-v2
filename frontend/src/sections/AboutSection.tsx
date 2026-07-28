@@ -47,7 +47,7 @@ const FEATURES = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className={styles.section} aria-labelledby="about-heading">
+    <section id="why-us" className={styles.section} aria-labelledby="about-heading">
       <div className={styles.container}>
 
         {/* Left */}

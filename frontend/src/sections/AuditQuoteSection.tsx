@@ -63,7 +63,7 @@ export default function AuditQuoteSection() {
 
   return (
     <section
-      id="audit-quote"
+      id="faq"
       className={styles.section}
       style={{ background: '#ffffff' }}
       aria-labelledby="audit-heading"

@@ -1,4 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Navbar.module.css';
 
 /* ──────────────────────────────────────────────
@@ -7,17 +9,9 @@ import styles from './Navbar.module.css';
 
 const LogoIcon = () => (
   <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    {/* Medical cross / plus mark */}
     <rect x="9" y="3" width="4" height="16" rx="2" fill="white" fillOpacity="0.95" />
     <rect x="3" y="9" width="16" height="4" rx="2" fill="white" fillOpacity="0.95" />
-    {/* Small accent dot */}
     <circle cx="18.5" cy="5.5" r="2" fill="rgba(255,255,255,0.55)" />
-  </svg>
-);
-
-const ChevronDownIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 5l4 4 4-4" />
   </svg>
 );
 
@@ -53,35 +47,103 @@ const ShieldIcon = () => (
 interface NavItem {
   label: string;
   href: string;
-  hasDropdown?: boolean;
+  isRoute?: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: 'Home',       href: '#home'      },
-  { label: 'Services',   href: '#services',  hasDropdown: true },
-  { label: 'About Us',   href: '#about'     },
-  { label: 'Resources',  href: '#resources', hasDropdown: true },
-  { label: 'Contact',    href: '#contact'   },
+  { label: 'Home',          href: '#home'         },
+  { label: 'Services',      href: '/services', isRoute: true },
+  { label: 'Why Choose Us', href: '#why-us'       },
+  { label: 'How It Works',  href: '#how-it-works' },
+  { label: 'Testimonials',  href: '#testimonials' },
+  { label: 'FAQ',           href: '#faq'          },
+  { label: 'Contact',       href: '#contact'      },
 ];
 
 /* ──────────────────────────────────────────────
    Navbar Component
    ────────────────────────────────────────────── */
 export default function Navbar() {
-  const [isScrolled, setIsScrolled]   = useState(false);
-  const [drawerOpen, setDrawerOpen]   = useState(false);
-  const [activeLink, setActiveLink]   = useState('#home');
-  const drawerRef                     = useRef<HTMLDivElement>(null);
-  const hamburgerRef                  = useRef<HTMLButtonElement>(null);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  /* Scroll detection */
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeLink, setActiveLink] = useState('#home');
+  const isClickScrollingRef = useRef(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+
+  // Sync activeLink with route location
   useEffect(() => {
-    const threshold = 60;
-    const onScroll = () => setIsScrolled(window.scrollY > threshold);
-    onScroll(); // initial read
+    if (location.pathname === '/services') {
+      setActiveLink('/services');
+    } else if (location.pathname === '/') {
+      setActiveLink((prev) => (prev.startsWith('#') ? prev : '#home'));
+    }
+  }, [location.pathname]);
+
+
+  /* Scroll spy using IntersectionObserver (only on homepage) */
+  useEffect(() => {
+    if (location.pathname !== '/') return;
+
+    const sectionIds = ['home', 'why-us', 'how-it-works', 'testimonials', 'faq', 'contact'];
+
+    const checkEdgeCases = (): boolean => {
+      if (isClickScrollingRef.current) return true;
+
+      if (window.scrollY < 80) {
+        setActiveLink('#home');
+        return true;
+      }
+
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 60) {
+        setActiveLink('#contact');
+        return true;
+      }
+
+      return false;
+    };
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-80px 0px -45% 0px',
+      threshold: [0, 0.25, 0.5, 0.75, 1.0],
+    };
+
+    const sectionElements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver((entries) => {
+      if (isClickScrollingRef.current) return;
+      if (checkEdgeCases()) return;
+
+      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
+      if (visibleEntries.length > 0) {
+        visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const topMost = visibleEntries[0];
+        if (topMost && topMost.target.id) {
+          setActiveLink(`#${topMost.target.id}`);
+        }
+      }
+    }, observerOptions);
+
+    sectionElements.forEach((el) => observer.observe(el));
+
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 60);
+      checkEdgeCases();
+    };
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [location.pathname]);
 
   /* Lock body scroll when drawer is open */
   useEffect(() => {
@@ -101,10 +163,56 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', onKey);
   }, [closeDrawer]);
 
-  /* Handle nav link clicks */
-  const handleNavClick = (href: string) => {
-    setActiveLink(href);
+  /* Handle link click */
+  const handleNavClick = (e: React.MouseEvent, item: NavItem) => {
+    e.preventDefault();
     setDrawerOpen(false);
+
+    if (item.isRoute) {
+      setActiveLink(item.href);
+      navigate(item.href);
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    // If currently on /services and clicking a section link, navigate home first then scroll
+    if (location.pathname !== '/') {
+      setActiveLink(item.href);
+      navigate('/');
+      setTimeout(() => {
+        const targetId = item.href.replace('#', '');
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          const navOffset = 80;
+          const elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: elementPosition - navOffset,
+            behavior: 'smooth',
+          });
+        }
+      }, 120);
+      return;
+    }
+
+    // Homepage smooth scroll
+    setActiveLink(item.href);
+    isClickScrollingRef.current = true;
+
+    const targetId = item.href.replace('#', '');
+    const targetEl = document.getElementById(targetId);
+
+    if (targetEl) {
+      const navOffset = 80;
+      const elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - navOffset,
+        behavior: 'smooth',
+      });
+    }
+
+    setTimeout(() => {
+      isClickScrollingRef.current = false;
+    }, 850);
   };
 
   /* Trap focus inside drawer */
@@ -127,8 +235,13 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Floating Navbar ── */}
-      <header className={wrapperClass} role="banner">
+      <motion.header
+        className={wrapperClass}
+        role="banner"
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0 }}
+      >
         <nav className={navbarClass} aria-label="Main navigation">
 
           {/* Logo */}
@@ -136,7 +249,7 @@ export default function Navbar() {
             href="#home"
             className={styles.logoSection}
             aria-label="Care2Solutions — Home"
-            onClick={() => handleNavClick('#home')}
+            onClick={(e) => handleNavClick(e, { label: 'Home', href: '#home' })}
           >
             <div className={styles.logoMark} aria-hidden="true">
               <LogoIcon />
@@ -157,12 +270,23 @@ export default function Navbar() {
                     href={item.href}
                     className={[styles.navLink, isActive ? styles.active : ''].join(' ').trim()}
                     aria-current={isActive ? 'page' : undefined}
-                    onClick={() => handleNavClick(item.href)}
+                    onClick={(e) => handleNavClick(e, item)}
                   >
-                    <span className={styles.navLinkInner}>{item.label}</span>
-                    {item.hasDropdown && (
-                      <ChevronDownIcon className={styles.navChevron} />
-                    )}
+                    <span className={styles.navLinkInner}>
+                      {item.label}
+
+                      {/* Smooth layoutId underline transition */}
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeNavUnderline"
+                          className={styles.activeUnderline}
+                          transition={{
+                            duration: 0.28,
+                            ease: [0.4, 0, 0.2, 1],
+                          }}
+                        />
+                      )}
+                    </span>
                   </a>
                 </li>
               );
@@ -171,18 +295,16 @@ export default function Navbar() {
 
           {/* Right Section */}
           <div className={styles.navRight}>
-            {/* Desktop CTA */}
             <a
               href="#contact"
               className={[styles.ctaButton, styles.desktopCta].join(' ')}
               id="navbar-cta-book-consultation"
-              onClick={() => handleNavClick('#contact')}
+              onClick={(e) => handleNavClick(e, { label: 'Contact', href: '#contact' })}
             >
               <CalendarIcon />
               Book Consultation
             </a>
 
-            {/* Hamburger (mobile) */}
             <button
               ref={hamburgerRef}
               className={hamburgerClass}
@@ -200,16 +322,16 @@ export default function Navbar() {
           </div>
 
         </nav>
-      </header>
+      </motion.header>
 
-      {/* ── Mobile Drawer Overlay ── */}
+      {/* Mobile Drawer Overlay */}
       <div
         className={overlayClass}
         aria-hidden="true"
         onClick={closeDrawer}
       />
 
-      {/* ── Mobile Drawer ── */}
+      {/* Mobile Drawer */}
       <div
         id="mobile-drawer"
         ref={drawerRef}
@@ -217,16 +339,14 @@ export default function Navbar() {
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation"
-        // Make inert when closed for a11y
         {...(!drawerOpen ? { inert: '' } : {})}
       >
-        {/* Drawer Header */}
         <div className={styles.drawerHeader}>
           <a
             href="#home"
             className={styles.logoSection}
             aria-label="Care2Solutions — Home"
-            onClick={() => handleNavClick('#home')}
+            onClick={(e) => handleNavClick(e, { label: 'Home', href: '#home' })}
           >
             <div className={styles.logoMark} aria-hidden="true">
               <LogoIcon />
@@ -245,7 +365,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Drawer Nav Links */}
         <nav className={styles.drawerNav} aria-label="Mobile navigation">
           {NAV_ITEMS.map((item) => {
             const isActive = activeLink === item.href;
@@ -255,7 +374,7 @@ export default function Navbar() {
                 href={item.href}
                 className={[styles.drawerNavLink, isActive ? styles.active : ''].join(' ').trim()}
                 aria-current={isActive ? 'page' : undefined}
-                onClick={() => handleNavClick(item.href)}
+                onClick={(e) => handleNavClick(e, item)}
               >
                 {item.label}
                 <ChevronRightIcon className={styles.drawerNavChevron} />
@@ -264,13 +383,12 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Drawer Footer CTA */}
         <div className={styles.drawerFooter}>
           <a
             href="#contact"
             className={styles.drawerCta}
             id="mobile-cta-book-consultation"
-            onClick={() => handleNavClick('#contact')}
+            onClick={(e) => handleNavClick(e, { label: 'Contact', href: '#contact' })}
           >
             <CalendarIcon />
             Book Consultation
@@ -282,7 +400,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Spacer so page content isn't hidden under fixed nav */}
       <div className={styles.navSpacer} aria-hidden="true" />
     </>
   );
