@@ -338,8 +338,7 @@ export default function Navbar() {
         className={drawerClass}
         role="dialog"
         aria-modal="true"
-        aria-label="Mobile navigation"
-        {...(!drawerOpen ? { inert: '' } : {})}
+        inert={!drawerOpen || undefined}
       >
         <div className={styles.drawerHeader}>
           <a

@@ -75,7 +75,7 @@ function AnimatedCounter({
   useEffect(() => {
     let animationFrameId: number;
     let startTimestamp: number | null = null;
-    let timerId: NodeJS.Timeout;
+    let timerId: ReturnType<typeof setTimeout>;
 
     timerId = setTimeout(() => {
       const step = (timestamp: number) => {
