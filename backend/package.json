@@ -6,13 +6,15 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "tsx --test tests/**/*.test.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@fastify/cors": "^11.3.0",
     "fastify": "^5.10.0",
     "zod": "^4.4.3"
   },
