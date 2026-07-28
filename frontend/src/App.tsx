@@ -1,9 +1,14 @@
+import Navbar from './components/Navbar';
+import HomePage from './pages/HomePage';
+import './App.css';
+
 function App() {
   return (
-    <div>
-      <h1>Care2Solutions v2</h1>
-    </div>
-  )
+    <>
+      <Navbar />
+      <HomePage />
+    </>
+  );
 }
 
-export default App
+export default App;
