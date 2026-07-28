@@ -1,6 +1,8 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import { healthRoutes } from './routes/health';
+import { contactRoutes } from './routes/contact';
+import { auditQuoteRoutes } from './routes/auditQuote';
 
 export async function buildApp() {
   const app = Fastify({
@@ -17,6 +19,8 @@ export async function buildApp() {
 
   // Register routes
   await app.register(healthRoutes, { prefix: '/api' });
+  await app.register(contactRoutes, { prefix: '/api' });
+  await app.register(auditQuoteRoutes, { prefix: '/api' });
 
   return app;
 }
