@@ -1,0 +1,541 @@
+/* ============================================================
+   Navbar.module.css — C2S Floating Navigation Bar
+   ============================================================ */
+
+/* ---- Outer wrapper: positions the floating bar ---- */
+.navbarWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-nav);
+  display: flex;
+  justify-content: center;
+  padding-top: var(--nav-top-margin);
+  pointer-events: none; /* allow clicks to pass through the wrapper gap */
+  transition: padding-top var(--transition-nav);
+}
+
+.navbarWrapper.scrolled {
+  padding-top: 10px;
+}
+
+/* ---- The floating pill itself ---- */
+.navbar {
+  pointer-events: all;
+  width: var(--nav-width);
+  max-width: 1280px;
+  height: var(--nav-height);
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: var(--nav-radius);
+  box-shadow: var(--shadow-nav);
+  border: 1px solid var(--color-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  gap: 24px;
+  transition:
+    height var(--transition-nav),
+    box-shadow var(--transition-nav),
+    backdrop-filter var(--transition-nav),
+    background var(--transition-nav);
+  will-change: height, box-shadow;
+}
+
+.navbar.scrolled {
+  height: var(--nav-height-scrolled);
+  box-shadow: var(--shadow-nav-scrolled);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px) saturate(1.8);
+  -webkit-backdrop-filter: blur(16px) saturate(1.8);
+}
+
+/* ---- Logo Section ---- */
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: var(--color-primary);
+  border-radius: 10px;
+  flex-shrink: 0;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.logoSection:hover .logoMark {
+  transform: scale(1.04);
+  box-shadow: 0 4px 14px -2px rgb(15 76 129 / 0.40);
+}
+
+.logoMark svg {
+  width: 22px;
+  height: 22px;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoName {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.3px;
+}
+
+.logoTagline {
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* ---- Center Navigation ---- */
+.navCenter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    color var(--transition-base),
+    background var(--transition-base);
+  white-space: nowrap;
+  border: none;
+  background: transparent;
+  user-select: none;
+}
+
+.navLink:hover {
+  color: var(--color-primary);
+  background: rgba(15, 76, 129, 0.05);
+}
+
+.navLink.active {
+  color: var(--color-primary);
+}
+
+/* Active indicator dot */
+.navLink.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+/* Hover underline slide-in effect */
+.navLinkInner {
+  position: relative;
+}
+
+.navLinkInner::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navLink:hover .navLinkInner::after,
+.navLink.active .navLinkInner::after {
+  transform: scaleX(1);
+}
+
+/* ---- Dropdown chevron ---- */
+.navChevron {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: transform var(--transition-base);
+  color: var(--color-text-muted);
+}
+
+.navItem:hover .navChevron {
+  transform: rotate(180deg);
+  color: var(--color-primary);
+}
+
+/* ---- Right Section ---- */
+.navRight {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* ---- CTA Button ---- */
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  font-family: var(--font-sans);
+  font-size: 14.5px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  letter-spacing: -0.1px;
+  box-shadow: var(--shadow-btn);
+  transition:
+    background var(--transition-base),
+    transform var(--transition-fast),
+    box-shadow var(--transition-base);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.ctaButton:hover {
+  background: var(--color-primary-dark);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.ctaButton:active {
+  transform: translateY(0) scale(0.99);
+  box-shadow: var(--shadow-btn);
+}
+
+.ctaButton svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* ---- Hamburger Button (mobile) ---- */
+.hamburgerBtn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1.5px solid var(--color-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base);
+  flex-shrink: 0;
+}
+
+.hamburgerBtn:hover {
+  background: rgba(15, 76, 129, 0.05);
+  border-color: var(--color-primary);
+}
+
+.hamburgerIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 4.5px;
+  width: 18px;
+}
+
+.hamburgerLine {
+  display: block;
+  height: 1.5px;
+  background: var(--color-text-secondary);
+  border-radius: 2px;
+  transition: transform var(--transition-base), opacity var(--transition-base), width var(--transition-base);
+  transform-origin: center;
+}
+
+.hamburgerBtn.open .hamburgerLine:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.hamburgerBtn.open .hamburgerLine:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.hamburgerBtn.open .hamburgerLine:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* ============================================================
+   Mobile Drawer
+   ============================================================ */
+.drawerOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-nav),
+    visibility var(--transition-nav);
+}
+
+.drawerOverlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-drawer);
+  width: min(340px, 90vw);
+  background: var(--color-surface);
+  box-shadow: -8px 0 40px -8px rgb(0 0 0 / 0.18);
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--transition-nav);
+}
+
+.drawer.open {
+  transform: translateX(0);
+}
+
+.drawerHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+.drawerCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base);
+}
+
+.drawerCloseBtn:hover {
+  background: rgba(15, 76, 129, 0.06);
+  border-color: var(--color-primary);
+}
+
+.drawerCloseBtn svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-secondary);
+}
+
+.drawerNav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawerNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  font-family: var(--font-sans);
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    color var(--transition-base),
+    background var(--transition-base);
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.drawerNavLink:hover {
+  color: var(--color-primary);
+  background: rgba(15, 76, 129, 0.05);
+}
+
+.drawerNavLink.active {
+  color: var(--color-primary);
+  background: rgba(15, 76, 129, 0.07);
+  font-weight: 600;
+}
+
+.drawerNavChevron {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.drawerNavLink.active .drawerNavChevron {
+  color: var(--color-primary);
+}
+
+.drawerFooter {
+  padding: 20px 24px;
+  border-top: 1px solid var(--color-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawerCta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 22px;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: var(--shadow-btn);
+  transition:
+    background var(--transition-base),
+    box-shadow var(--transition-base);
+}
+
+.drawerCta:hover {
+  background: var(--color-primary-dark);
+  box-shadow: var(--shadow-btn-hover);
+}
+
+.drawerCta svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.drawerBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px;
+  background: rgba(15, 76, 129, 0.04);
+  border: 1px solid rgba(15, 76, 129, 0.08);
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.drawerBadge svg {
+  width: 13px;
+  height: 13px;
+  color: var(--color-secondary);
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   Responsive — Tablet (≤ 900px)
+   ============================================================ */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .navCenter {
+    gap: 0;
+  }
+
+  .navLink {
+    font-size: 14px;
+    padding: 7px 10px;
+  }
+
+  .logoTagline {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Responsive — Mobile (≤ 680px)
+   ============================================================ */
+@media (max-width: 680px) {
+  .navCenter {
+    display: none;
+  }
+
+  .hamburgerBtn {
+    display: flex;
+  }
+
+  .navbar {
+    padding: 0 18px;
+    gap: 12px;
+  }
+
+  /* Hide desktop CTA on mobile, show in drawer */
+  .desktopCta {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Spacer — so content isn't hidden under fixed nav
+   ============================================================ */
+.navSpacer {
+  height: calc(var(--nav-height) + var(--nav-top-margin) + 12px);
+}
