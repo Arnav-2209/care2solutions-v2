@@ -140,50 +140,55 @@
 }
 
 .navLink:hover {
-  color: var(--color-primary);
-  background: rgba(15, 76, 129, 0.05);
+  color: #0b3a63;
+  background: rgba(15, 76, 129, 0.04);
 }
 
 .navLink.active {
   color: var(--color-primary);
+  font-weight: 600;
 }
 
-/* Active indicator dot */
-.navLink.active::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-primary);
-}
-
-/* Hover underline slide-in effect */
 .navLinkInner {
   position: relative;
+  display: inline-block;
 }
 
-.navLinkInner::after {
+/* Subtle fade-in underline preview on hover for inactive items */
+.navLink:not(.active) .navLinkInner::after {
   content: '';
   position: absolute;
-  bottom: -2px;
-  left: 0;
-  right: 0;
-  height: 2px;
+  bottom: -3px;
+  left: -6px;
+  right: -6px;
+  height: 2.5px;
   background: var(--color-primary);
-  border-radius: 1px;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  border-radius: 999px;
+  transform: scaleX(0.7);
+  transition: opacity 250ms ease, transform 250ms ease;
+  pointer-events: none;
 }
 
-.navLink:hover .navLinkInner::after,
-.navLink.active .navLinkInner::after {
+.navLink:not(.active):hover .navLinkInner::after {
+  opacity: 0.25;
   transform: scaleX(1);
 }
+
+/* Active underline (Animated via Framer Motion layoutId) */
+.activeUnderline {
+  position: absolute;
+  bottom: -3px;
+  left: -6px;
+  right: -6px;
+  height: 2.5px;
+  background: var(--color-primary);
+  border-radius: 999px;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(15, 76, 129, 0.2);
+}
+
+
 
 /* ---- Dropdown chevron ---- */
 .navChevron {

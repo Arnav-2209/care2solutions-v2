@@ -35,7 +35,7 @@ const RESOURCES = [
 
 export default function ResourcesSection() {
   return (
-    <section id="resources" className={styles.section} aria-labelledby="resources-heading">
+    <section id="how-it-works" className={styles.section} aria-labelledby="resources-heading">
       <div className={styles.container}>
 
         <header className={styles.header}>

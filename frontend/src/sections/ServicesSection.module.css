@@ -1,21 +1,35 @@
 /* ============================================================
-   ServicesSection.module.css
+   ServicesSection.module.css — Sticky Scroll Storytelling
    ============================================================ */
 
 .section {
   padding: 100px 24px;
   background: #ffffff;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background gradient wash */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 50% at 50% 30%, rgba(15, 76, 129, 0.03) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-/* Section header */
+/* ── Section Header ───────────────────────────────────────── */
 .header {
   text-align: center;
-  margin-bottom: 60px;
+  max-width: 720px;
+  margin: 0 auto 80px;
 }
 
 .eyebrow {
@@ -32,7 +46,7 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   font-family: var(--font-sans);
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .eyebrowDot {
@@ -44,12 +58,12 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 4vw, 2.75rem);
   font-weight: 800;
   color: var(--color-text-primary);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  margin-bottom: 16px;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin-bottom: 18px;
 }
 
 .titleAccent {
@@ -60,109 +74,405 @@
   font-family: var(--font-sans);
   font-size: 1.05rem;
   color: var(--color-text-secondary);
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.7;
+  line-height: 1.75;
+  margin: 0;
 }
 
-/* Cards grid */
-.grid {
+/* ── Sticky Storytelling Layout ───────────────────────────── */
+.storyLayout {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: 42% 58%;
+  gap: 56px;
+  align-items: start;
+  position: relative;
 }
 
-.card {
+/* ── Left Sticky Panel (42%) ──────────────────────────────── */
+.leftStickyCol {
+  position: sticky;
+  top: 110px;
+  height: calc(100vh - 140px);
+  max-height: 620px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 28px 26px;
-  background: var(--color-bg);
-  border: 1px solid var(--color-border-light);
-  border-radius: 18px;
-  cursor: default;
-  transition:
-    transform var(--transition-base),
-    box-shadow var(--transition-base),
-    border-color var(--transition-base);
+  justify-content: center;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px -8px rgba(15, 76, 129, 0.13), 0 2px 6px rgba(0,0,0,0.04);
-  border-color: rgba(15, 76, 129, 0.18);
+.dashCard {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.03),
+    0 20px 40px -12px rgba(15, 76, 129, 0.10);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  overflow: hidden;
 }
 
-.iconWrap {
+.dashHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.dashHeaderTitle {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashHeaderIcon {
+  width: 28px;
+  height: 28px;
+  background: rgba(15, 76, 129, 0.08);
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: rgba(15, 76, 129, 0.08);
-  border-radius: 14px;
-  flex-shrink: 0;
-  transition: background var(--transition-base);
-}
-
-.card:hover .iconWrap {
-  background: rgba(15, 76, 129, 0.13);
-}
-
-.iconWrap svg {
-  width: 22px;
-  height: 22px;
   color: var(--color-primary);
 }
 
-.cardTitle {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  letter-spacing: -0.01em;
+.dashHeaderIcon svg {
+  width: 15px;
+  height: 15px;
 }
 
-.cardDesc {
+.dashStepBadge {
   font-family: var(--font-sans);
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  line-height: 1.7;
-  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+  background: rgba(15, 76, 129, 0.10);
+  color: var(--color-primary);
+  letter-spacing: 0.03em;
 }
 
-.cardLink {
+/* KPI Card */
+.kpiCard {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.kpiLabel {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.kpiVal {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.03em;
+  margin-top: 2px;
+}
+
+.kpiStatus {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--color-primary);
   font-family: var(--font-sans);
-  text-decoration: none;
-  cursor: pointer;
-  background: none;
-  border: none;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 100px;
+  background: rgba(16, 185, 129, 0.10);
+  color: #059669;
+}
+
+/* Workflow Graphic Inner Body */
+.graphicBody {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 220px;
+  justify-content: center;
+}
+
+.graphicRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+}
+
+.graphicRowLabel {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.graphicRowSub {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.graphicTag {
+  font-family: var(--font-sans);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+/* Progress bar inside graphic */
+.progressBarTrack {
+  width: 100%;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 100px;
+  transition: width 500ms ease;
+}
+
+/* ── Right Scroll Column (58%) ────────────────────────────── */
+.rightScrollCol {
+  position: relative;
+  padding-left: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+/* Timeline Vertical Line */
+.timelineTrack {
+  position: absolute;
+  top: 40px;
+  bottom: 40px;
+  left: 0;
+  width: 2px;
+  background: #e2e8f0;
+  border-radius: 1px;
+}
+
+.timelineProgress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  transition: height 350ms ease-in-out;
+}
+
+/* Service Step Block */
+.stepBlock {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 0;
+  position: relative;
+}
+
+/* Step marker node on timeline */
+.stepNode {
+  position: absolute;
+  left: -42px;
+  top: 48px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #cbd5e1;
+  transition: border-color 300ms ease, background-color 300ms ease, transform 300ms ease;
+  z-index: 2;
+}
+
+.stepBlock.active .stepNode {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(15, 76, 129, 0.18);
+  transform: scale(1.15);
+}
+
+.stepNumber {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  transition: color 300ms ease;
+}
+
+.stepBlock.active .stepNumber {
+  color: var(--color-primary);
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin-bottom: 14px;
+}
+
+.stepDesc {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.75;
+  margin-bottom: 24px;
+  max-width: 520px;
+}
+
+/* Key Benefits list */
+.benefitsList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 28px;
   padding: 0;
-  transition: gap var(--transition-fast);
+  list-style: none;
 }
 
-.cardLink:hover {
-  gap: 9px;
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
 }
 
-.cardLink svg {
-  width: 13px;
-  height: 13px;
+.benefitCheck {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: rgba(16, 185, 129, 0.10);
+  border-radius: 50%;
+  color: #10b981;
   flex-shrink: 0;
 }
 
-/* ── Responsive ── */
-@media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(2, 1fr); }
+.benefitCheck svg {
+  width: 11px;
+  height: 11px;
 }
 
-@media (max-width: 560px) {
-  .grid { grid-template-columns: 1fr; }
-  .section { padding: 72px 20px; }
+/* CTA button */
+.stepCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 11px 22px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(15, 76, 129, 0.06);
+  border: 1px solid rgba(15, 76, 129, 0.15);
+  border-radius: 10px;
+  cursor: pointer;
+  width: fit-content;
+  transition:
+    background var(--transition-base),
+    border-color var(--transition-base),
+    transform var(--transition-fast);
+}
+
+.stepCta:hover {
+  background: rgba(15, 76, 129, 0.12);
+  border-color: rgba(15, 76, 129, 0.25);
+  transform: translateY(-2px);
+}
+
+.stepCta svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 200ms ease;
+}
+
+.stepCta:hover svg {
+  transform: translateX(3px);
+}
+
+/* Mobile Inline Graphic (shown only on mobile) */
+.mobileGraphic {
+  display: none;
+}
+
+/* ── Mobile & Tablet Responsive ───────────────────────────── */
+@media (max-width: 860px) {
+  .section {
+    padding: 72px 20px;
+  }
+
+  .header {
+    margin-bottom: 48px;
+  }
+
+  .storyLayout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .leftStickyCol {
+    display: none; /* Disable desktop sticky panel */
+  }
+
+  .rightScrollCol {
+    padding-left: 28px;
+    gap: 60px;
+  }
+
+  .timelineTrack {
+    left: 0;
+  }
+
+  .stepNode {
+    left: -35px;
+  }
+
+  .stepBlock {
+    min-height: auto;
+    padding: 24px 0;
+  }
+
+  .mobileGraphic {
+    display: block;
+    margin-bottom: 20px;
+  }
 }

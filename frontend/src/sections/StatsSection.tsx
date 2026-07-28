@@ -37,7 +37,7 @@ const STATS = [
 
 export default function StatsSection() {
   return (
-    <section className={styles.section} aria-labelledby="stats-heading">
+    <section id="testimonials" className={styles.section} aria-labelledby="stats-heading">
       <div className={styles.container}>
         <div className={styles.heading}>
           <span className={styles.headingLabel}>By the Numbers</span>
