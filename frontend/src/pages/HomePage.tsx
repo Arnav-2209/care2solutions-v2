@@ -1,6 +1,7 @@
 import HeroSection from '../sections/HeroSection';
 import StatsSection from '../sections/StatsSection';
 import AboutSection from '../sections/AboutSection';
+import JourneySection from '../sections/JourneySection';
 import ResourcesSection from '../sections/ResourcesSection';
 import ContactSection from '../sections/ContactSection';
 import AuditQuoteSection from '../sections/AuditQuoteSection';
@@ -20,6 +21,7 @@ export default function HomePage() {
         onGetFreeAudit={() => scrollToSection('faq')}
       />
       <StatsSection />
+      <JourneySection />
       <AboutSection />
       <ResourcesSection />
       <ContactSection />

@@ -54,8 +54,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Home',          href: '#home'         },
   { label: 'Services',      href: '/services', isRoute: true },
   { label: 'Why Choose Us', href: '#why-us'       },
-  { label: 'How It Works',  href: '#how-it-works' },
-  { label: 'Testimonials',  href: '#testimonials' },
+  { label: 'Your Journey',  href: '#journey'      },
   { label: 'FAQ',           href: '#faq'          },
   { label: 'Contact',       href: '#contact'      },
 ];
@@ -88,7 +87,7 @@ export default function Navbar() {
   useEffect(() => {
     if (location.pathname !== '/') return;
 
-    const sectionIds = ['home', 'why-us', 'how-it-works', 'testimonials', 'faq', 'contact'];
+    const sectionIds = ['home', 'why-us', 'journey', 'faq', 'contact'];
 
     const checkEdgeCases = (): boolean => {
       if (isClickScrollingRef.current) return true;

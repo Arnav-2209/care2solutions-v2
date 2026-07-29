@@ -1,107 +1,238 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import {
+  TrendingUp,
+  Users,
+  Sliders,
+  MessageSquare,
+  Handshake,
+  Zap,
+  ShieldCheck,
+  Shield,
+  Lock,
+  GraduationCap,
+  FileText,
+  KeyRound,
+  CloudCheck,
+  Check,
+  FileCheck
+} from 'lucide-react';
 import styles from './AboutSection.module.css';
 
-const CheckIcon = () => (
-  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 8l4 4 6-7" />
-  </svg>
-);
+interface Pillar {
+  icon: React.ElementType;
+  title: string;
+  sentence: string;
+}
 
-const ShieldIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M8 1.5L2 4v4.5c0 3 2.5 5.5 6 6.5 3.5-1 6-3.5 6-6.5V4L8 1.5z" />
-    <path d="M5.5 8l2 2 3.5-4" />
-  </svg>
-);
-
-const CertIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="8" cy="7" r="4" />
-    <path d="M5.5 12.5L8 11l2.5 1.5V15l-2.5-1-2.5 1v-2.5z" />
-  </svg>
-);
-
-const StarIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M8 1.5l1.9 3.8 4.2.6-3 2.9.7 4.2L8 11l-3.8 2 .7-4.2-3-2.9 4.2-.6L8 1.5z" />
-  </svg>
-);
-
-const FEATURES = [
+const TRUST_PILLARS: Pillar[] = [
   {
-    title: 'Dedicated Account Management',
-    desc: 'A named billing specialist who knows your practice inside out — reachable by phone, email, or chat.',
+    icon: TrendingUp,
+    title: 'Revenue Cycle Expertise',
+    sentence: 'Helping improve billing efficiency while reducing administrative workload.'
   },
   {
-    title: 'Real-Time Reporting & Dashboards',
-    desc: 'Live visibility into AR aging, denial rates, payer mix, and collection performance across your organization.',
+    icon: Users,
+    title: 'Dedicated Specialists',
+    sentence: 'Healthcare-focused professionals supporting your operations.'
   },
   {
-    title: 'HIPAA-Compliant Infrastructure',
-    desc: 'All data is encrypted at rest and in transit. Annual HIPAA training, signed BAAs, and audit-ready documentation.',
+    icon: Sliders,
+    title: 'Tailored Solutions',
+    sentence: 'Customized services aligned with your practice.'
   },
   {
-    title: 'Multi-Specialty Expertise',
-    desc: 'We bill for 40+ specialties — from primary care and cardiology to orthopedics and behavioral health.',
+    icon: MessageSquare,
+    title: 'Transparent Communication',
+    sentence: 'Clear updates and operational visibility.'
   },
+  {
+    icon: Handshake,
+    title: 'Long-Term Partnership',
+    sentence: 'Support that continues beyond onboarding.'
+  },
+  {
+    icon: Zap,
+    title: 'Operational Efficiency',
+    sentence: 'Helping simplify day-to-day healthcare workflows.'
+  }
+];
+
+interface Commitment {
+  title: string;
+  sentence: string;
+}
+
+const HIPAA_COMMITMENTS: Commitment[] = [
+  {
+    title: 'Secure PHI Handling',
+    sentence: 'Protecting oral, written, and electronic Protected Health Information.'
+  },
+  {
+    title: 'Privacy-First Operations',
+    sentence: 'Processes designed to reduce unauthorized access and disclosure.'
+  },
+  {
+    title: 'Employee Training',
+    sentence: 'Regular privacy and security awareness for employees handling sensitive information.'
+  },
+  {
+    title: 'Policies & Procedures',
+    sentence: 'Established internal procedures for safeguarding healthcare information.'
+  },
+  {
+    title: 'Restricted Data Access',
+    sentence: 'Access to sensitive doctor and patient information is controlled.'
+  },
+  {
+    title: 'Secure Data Transfer',
+    sentence: 'Confidential information is handled using secure transfer methods and protected cloud storage where applicable.'
+  }
 ];
 
 export default function AboutSection() {
   return (
-    <section id="why-us" className={styles.section} aria-labelledby="about-heading">
-      <div className={styles.container}>
+    <section id="why-us" className={styles.section} aria-labelledby="why-us-heading">
+      <div className={styles.bgGlow} aria-hidden="true" />
 
-        {/* Left */}
-        <div className={styles.left}>
+      <div className={styles.container}>
+        {/* Section Header (Centered) */}
+        <motion.div
+          className={styles.header}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+        >
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} aria-hidden="true" />
-            About C2S
+            WHY PARTNER WITH CARE2SOLUTIONS
           </div>
-          <h2 id="about-heading" className={styles.title}>
-            15+ Years of{' '}
-            <span className={styles.titleAccent}>Revenue Cycle Excellence</span>
+          <h2 id="why-us-heading" className={styles.heading}>
+            Why Healthcare Providers Choose <span className={styles.headingAccent}>Care2Solutions</span>
           </h2>
-          <p className={styles.body}>
-            Care2Solutions was founded with a single mission: remove the administrative burden
-            from healthcare providers so they can focus on what matters most — their patients.
-            We combine deep clinical billing expertise with modern technology to deliver
-            measurable, consistent results.
+          <p className={styles.subtitle}>
+            Helping healthcare providers simplify operations, improve revenue performance, and
+            protect patient data through secure, tailored healthcare solutions.
           </p>
-          <p className={styles.body} style={{ marginTop: '-20px' }}>
-            From independent physician practices to large hospital systems, we serve clients
-            across 35+ states with a personalized, partnership-first approach.
-          </p>
+        </motion.div>
 
-          <div className={styles.badges} aria-label="Certifications">
-            <span className={styles.badge}>
-              <ShieldIcon className={styles.badgeIcon} />
-              HIPAA Compliant
-            </span>
-            <span className={styles.badge}>
-              <CertIcon className={styles.badgeIcon} />
-              SOC 2 Type II
-            </span>
-            <span className={styles.badge}>
-              <StarIcon className={styles.badgeIcon} />
-              AAPC Certified Coders
-            </span>
-          </div>
-        </div>
+        {/* 60/40 Two-Column Layout */}
+        <div className={styles.mainGrid}>
+          {/* Left Column (60%): Why Choose Care2Solutions */}
+          <motion.div
+            className={styles.leftCol}
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <h3 className={styles.leftHeading}>A Partner You Can Depend On</h3>
 
-        {/* Right */}
-        <div className={styles.right} role="list">
-          {FEATURES.map((f) => (
-            <div key={f.title} className={styles.featureItem} role="listitem">
-              <div className={styles.featureCheckWrap} aria-hidden="true">
-                <CheckIcon />
+            <div className={styles.bodyParagraphs}>
+              <p className={styles.bodyText}>
+                Helping healthcare providers simplify operations, improve revenue performance, and
+                protect patient data through secure, tailored healthcare solutions.
+              </p>
+              <p className={styles.bodyText}>
+                Our experienced specialists combine healthcare expertise with transparent communication
+                and dedicated support to deliver reliable results throughout every stage of your
+                partnership.
+              </p>
+            </div>
+
+            {/* 6 Compact Trust Pillars in 2 Columns */}
+            <div className={styles.pillarsGrid}>
+              {TRUST_PILLARS.map((p, idx) => {
+                const Icon = p.icon;
+
+                return (
+                  <motion.div
+                    key={p.title}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    className={styles.pillarCard}
+                  >
+                    <div className={styles.pillarHeader}>
+                      <div className={styles.pillarIconBox}>
+                        <Icon size={20} />
+                      </div>
+                      <h4 className={styles.pillarTitle}>{p.title}</h4>
+                    </div>
+                    <p className={styles.pillarDesc}>{p.sentence}</p>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* Right Column (40%): One Premium Security & Compliance Card */}
+          <motion.div
+            className={styles.rightCol}
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+          >
+            <div className={styles.securityCard}>
+              <div className={styles.securityHeader}>
+                <div className={styles.shieldIconBadge}>
+                  <ShieldCheck size={26} />
+                </div>
+                <h3 className={styles.securityTitle}>HIPAA Commitment</h3>
               </div>
-              <div className={styles.featureText}>
-                <div className={styles.featureTitle}>{f.title}</div>
-                <div className={styles.featureDesc}>{f.desc}</div>
+
+              <p className={styles.securityDesc}>
+                Protecting patient information is fundamental to how Care2Solutions operates. Our
+                workflows are designed to support secure handling of Protected Health Information
+                (PHI) while maintaining privacy, confidentiality, and operational integrity.
+              </p>
+
+              {/* 6 Operational Commitments */}
+              <div className={styles.commitmentsList}>
+                {HIPAA_COMMITMENTS.map((c, idx) => (
+                  <motion.div
+                    key={c.title}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                    className={styles.commitmentRow}
+                  >
+                    <div className={styles.checkIconCircle} aria-hidden="true">
+                      <Check size={13} strokeWidth={3} />
+                    </div>
+                    <div className={styles.commitmentText}>
+                      <h4 className={styles.commitmentTitle}>{c.title}</h4>
+                      <p className={styles.commitmentSentence}>{c.sentence}</p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Highlighted Strip at Bottom */}
+              <div className={styles.highlightStrip}>
+                <div className={styles.stripLabel}>Built on Secure Healthcare Practices</div>
+                <div className={styles.badgesRow}>
+                  <div className={styles.trustBadgePill}>
+                    <Shield size={14} />
+                    <span>HIPAA-Focused Operations</span>
+                  </div>
+                  <div className={styles.trustBadgePill}>
+                    <Lock size={14} />
+                    <span>Protected Health Information</span>
+                  </div>
+                  <div className={styles.trustBadgePill}>
+                    <FileCheck size={14} />
+                    <span>Confidential Data Handling</span>
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
+          </motion.div>
         </div>
-
       </div>
     </section>
   );
