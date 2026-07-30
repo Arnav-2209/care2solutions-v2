@@ -75,8 +75,8 @@
   border-radius: 18px;
   overflow: hidden;
   transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
-  cursor: pointer;
   text-decoration: none;
+  color: inherit;
 }
 
 .card:hover {
@@ -129,14 +129,7 @@
   border-top: 1px solid var(--color-border-light);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-}
-
-.cardMeta {
-  font-family: var(--font-sans);
-  font-size: 12.5px;
-  color: var(--color-text-muted);
-  font-weight: 500;
+  justify-content: flex-end;
 }
 
 .cardReadMore {

@@ -7,6 +7,11 @@
 export type ServiceNeeded =
   | 'medical-billing'
   | 'transcription'
+  | 'medical-coding'
+  | 'eligibility-verification'
+  | 'patient-scheduling'
+  | 'prior-authorization'
+  | 'debt-collections'
   | 'credentialing'
   | 'rcm'
   | 'other';

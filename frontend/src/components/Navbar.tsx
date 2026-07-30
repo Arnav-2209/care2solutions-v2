@@ -7,11 +7,26 @@ import styles from './Navbar.module.css';
    Inline SVG Icons (no external dependency)
    ────────────────────────────────────────────── */
 
-const LogoIcon = () => (
-  <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <rect x="9" y="3" width="4" height="16" rx="2" fill="white" fillOpacity="0.95" />
-    <rect x="3" y="9" width="16" height="4" rx="2" fill="white" fillOpacity="0.95" />
-    <circle cx="18.5" cy="5.5" r="2" fill="rgba(255,255,255,0.55)" />
+const OfficialLogo = () => (
+  <svg viewBox="0 0 240 54" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.officialLogoSvg} aria-hidden="true">
+    <g transform="translate(0, 3)">
+      <rect x="0" y="0" width="48" height="48" rx="14" fill="url(#c2s_official_logo_grad)" />
+      <path d="M24 12v24M12 24h24" stroke="white" strokeWidth="4" strokeLinecap="round" />
+      <path d="M14 32c3.5 3.5 9 4.5 13.5 1 4.5-3.5 8.5-2.5 10.5 1" stroke="rgba(255,255,255,0.75)" strokeWidth="2.5" strokeLinecap="round" />
+      <circle cx="36" cy="13" r="3.5" fill="#60A5FA" />
+    </g>
+    <text x="58" y="30" fontFamily="var(--font-display, 'Manrope', sans-serif)" fontWeight="800" fontSize="22" fill="#0F4C81" letterSpacing="-0.4">
+      Care<tspan fill="#2D9CDB">2</tspan>Solutions
+    </text>
+    <text x="58.5" y="44" fontFamily="var(--font-sans, 'Inter', sans-serif)" fontWeight="700" fontSize="8.5" fill="#64748B" letterSpacing="1.2">
+      HEALTHCARE RCM PLATFORM
+    </text>
+    <defs>
+      <linearGradient id="c2s_official_logo_grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+        <stop stopColor="#0F4C81" />
+        <stop offset="1" stopColor="#2D9CDB" />
+      </linearGradient>
+    </defs>
   </svg>
 );
 
@@ -54,9 +69,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Home',          href: '#home'         },
   { label: 'Services',      href: '/services', isRoute: true },
   { label: 'Why Choose Us', href: '#why-us'       },
-  { label: 'How It Works',  href: '#how-it-works' },
-  { label: 'Testimonials',  href: '#testimonials' },
-  { label: 'FAQ',           href: '#faq'          },
+  { label: 'Your Journey',  href: '#journey'      },
   { label: 'Contact',       href: '#contact'      },
 ];
 
@@ -88,7 +101,7 @@ export default function Navbar() {
   useEffect(() => {
     if (location.pathname !== '/') return;
 
-    const sectionIds = ['home', 'why-us', 'how-it-works', 'testimonials', 'faq', 'contact'];
+    const sectionIds = ['home', 'why-us', 'journey', 'contact'];
 
     const checkEdgeCases = (): boolean => {
       if (isClickScrollingRef.current) return true;
@@ -251,13 +264,7 @@ export default function Navbar() {
             aria-label="Care2Solutions — Home"
             onClick={(e) => handleNavClick(e, { label: 'Home', href: '#home' })}
           >
-            <div className={styles.logoMark} aria-hidden="true">
-              <LogoIcon />
-            </div>
-            <div className={styles.logoText}>
-              <span className={styles.logoName}>Care2Solutions</span>
-              <span className={styles.logoTagline}>Healthcare RCM Platform</span>
-            </div>
+            <OfficialLogo />
           </a>
 
           {/* Desktop Nav Links */}
@@ -338,7 +345,8 @@ export default function Navbar() {
         className={drawerClass}
         role="dialog"
         aria-modal="true"
-        inert={!drawerOpen || undefined}
+        aria-label="Mobile navigation"
+        inert={!drawerOpen ? true : undefined}
       >
         <div className={styles.drawerHeader}>
           <a
@@ -347,13 +355,7 @@ export default function Navbar() {
             aria-label="Care2Solutions — Home"
             onClick={(e) => handleNavClick(e, { label: 'Home', href: '#home' })}
           >
-            <div className={styles.logoMark} aria-hidden="true">
-              <LogoIcon />
-            </div>
-            <div className={styles.logoText}>
-              <span className={styles.logoName}>Care2Solutions</span>
-              <span className={styles.logoTagline}>Healthcare RCM Platform</span>
-            </div>
+            <OfficialLogo />
           </a>
           <button
             className={styles.drawerCloseBtn}
