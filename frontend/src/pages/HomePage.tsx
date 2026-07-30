@@ -17,9 +17,11 @@ export default function HomePage() {
         onBookConsultation={() => scrollToSection('contact')}
         onGetFreeAudit={() => scrollToSection('contact')}
       />
-      <JourneySection />
       <AboutSection />
+      <JourneySection />
       <ResourcesSection />
     </main>
   );
 }
+
+

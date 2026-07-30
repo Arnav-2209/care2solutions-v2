@@ -7,6 +7,7 @@ export const auditQuoteSchema = z.object({
   specialty: z.string().min(2, 'Specialty is required').max(100, 'Specialty cannot exceed 100 characters'),
   monthlyBillingVolume: z.enum(['$10k-$50k', '$50k-$100k', '$100k+']).optional(),
   notes: z.string().max(1000, 'Notes cannot exceed 1000 characters').optional(),
+  captchaToken: z.string().optional(),
 });
 
 export type AuditQuoteInput = z.infer<typeof auditQuoteSchema>;

@@ -55,10 +55,10 @@ export default function ContactSection() {
         {/* ── 1. Centered Section Header ── */}
         <motion.div
           className={styles.header}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 52 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} aria-hidden="true" />
@@ -77,10 +77,10 @@ export default function ContactSection() {
         {/* ── 2. Consultation Journey (3 Connected Cards) ── */}
         <motion.div
           className={styles.journeyContainer}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.journeyLine} aria-hidden="true" />
           <div className={styles.journeyGrid}>
@@ -90,10 +90,10 @@ export default function ContactSection() {
                 <motion.div
                   key={step.title}
                   className={styles.journeyCard}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.1 + 0.15 }}
+                  initial={{ opacity: 0, y: 36, scale: 0.92 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: false, amount: 0.1 }}
+                  transition={{ duration: 0.5, delay: idx * 0.12, ease: [0.22, 1, 0.36, 1] }}
                 >
                   <div className={styles.stepIconBadge} aria-hidden="true">
                     <StepIcon size={24} />
@@ -110,10 +110,10 @@ export default function ContactSection() {
         {/* ── 3. Centered Floating Consultation Card ── */}
         <motion.div
           className={styles.floatingFormCard}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+          initial={{ opacity: 0, y: 50, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           {isSuccess ? (
             /* Success Confirmation Panel */
@@ -321,10 +321,10 @@ export default function ContactSection() {
         {/* ── 4. Contact Information Row (3 Equal Cards) ── */}
         <motion.div
           className={styles.infoRow}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           {/* Card 1: Call Us */}
           <div className={styles.infoCard}>
@@ -373,10 +373,10 @@ export default function ContactSection() {
         {/* ── 5. HIPAA Trust Strip ── */}
         <motion.div
           className={styles.trustStrip}
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 32 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.1 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.trustStripHeader}>
             <ShieldCheck size={22} className={styles.trustStripIcon} />

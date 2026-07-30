@@ -72,10 +72,10 @@ export default function Footer() {
         {/* ── 1. Centered Header ── */}
         <motion.div
           className={styles.header}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <h2 id="footer-heading" className={styles.title}>
             Start Your Partnership with Care2Solutions
@@ -90,10 +90,10 @@ export default function Footer() {
           {/* ── LEFT COLUMN (40%): Info & HIPAA ── */}
           <motion.div
             className={styles.leftCol}
-            initial={{ opacity: 0, x: -24 }}
+            initial={{ opacity: 0, x: -52 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.logoWrap}>
               <OfficialLogoLightText />
@@ -186,10 +186,10 @@ export default function Footer() {
           {/* ── RIGHT COLUMN (60%): Floating Consultation Card ── */}
           <motion.div
             className={styles.rightCol}
-            initial={{ opacity: 0, x: 24 }}
+            initial={{ opacity: 0, x: 52 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.floatingCard}>
               {isSuccess ? (

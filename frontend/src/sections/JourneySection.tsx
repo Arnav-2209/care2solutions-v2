@@ -383,10 +383,10 @@ export default function JourneySection() {
         {/* Header */}
         <motion.div
           className={styles.header}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 52 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} aria-hidden="true" />
@@ -421,10 +421,10 @@ export default function JourneySection() {
                   return (
                     <motion.div
                       key={stage.id}
-                      initial={{ opacity: 0, y: 24 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.45, delay: idx * 0.08 }}
+                      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: false, amount: 0.1 }}
+                      transition={{ duration: 0.55, delay: idx * 0.1, ease: [0.22, 1, 0.36, 1] }}
                       style={{ height: '100%' }}
                     >
                       <button
@@ -456,10 +456,10 @@ export default function JourneySection() {
                     <motion.div
                       key={stage.id}
                       className={styles.bottomRowCard}
-                      initial={{ opacity: 0, y: 24 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.45, delay: (idx + 3) * 0.08 }}
+                      initial={{ opacity: 0, y: 40, scale: 0.9 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      viewport={{ once: false, amount: 0.1 }}
+                      transition={{ duration: 0.55, delay: (idx + 3) * 0.1, ease: [0.22, 1, 0.36, 1] }}
                     >
                       <button
                         type="button"

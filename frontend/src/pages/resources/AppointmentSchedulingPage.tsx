@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSEO } from '../../utils/useSEO';
 import ResourceHero from '../../components/resource/ResourceHero';
 import ResourceCTA from '../../components/resource/ResourceCTA';
@@ -15,6 +16,8 @@ const SCHEDULING_WORKFLOW = [
 ];
 
 export default function AppointmentSchedulingPage() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   useSEO(
     'Appointment Scheduling and Practice Efficiency | Care2Solutions',
     'Explore how scheduling, rescheduling, cancellations, and organized appointment workflows support healthcare practice operations.',

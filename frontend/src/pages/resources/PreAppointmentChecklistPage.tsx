@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSEO } from '../../utils/useSEO';
 import ResourceHero from '../../components/resource/ResourceHero';
 import ResourceCTA from '../../components/resource/ResourceCTA';
@@ -82,6 +83,8 @@ const CHECKLIST_ITEMS: ChecklistItemData[] = [
 ];
 
 export default function PreAppointmentChecklistPage() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   useSEO(
     'Pre-Appointment Revenue Cycle Checklist | Care2Solutions',
     'A practical checklist covering eligibility verification, benefits, prior authorization, coverage considerations, and other pre-appointment workflows.',

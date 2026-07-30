@@ -1,23 +1,24 @@
 import { ContactInput } from '../schemas/contact';
 import { getDb, schema } from '../db';
+import { sendContactFormNotification } from './emailService';
+import { sanitizeText, sanitizeOptional } from '../utils/sanitize';
 
 export async function processContactInquiry(input: ContactInput) {
   const db = getDb();
 
   if (db) {
-    try {
-      await db.insert(schema.contactInquiries).values({
-        name: input.name,
-        email: input.email,
-        phone: input.phone,
-        practiceName: input.practiceName || null,
-        serviceNeeded: input.serviceNeeded,
-        message: input.message,
-      });
-    } catch (err) {
-      console.error('Failed to persist contact inquiry to DB:', err);
-    }
+    await db.insert(schema.contactInquiries).values({
+      name: sanitizeText(input.name),
+      email: input.email,
+      phone: input.phone,
+      practiceName: sanitizeOptional(input.practiceName) || null,
+      serviceNeeded: input.serviceNeeded,
+      message: sanitizeText(input.message),
+    });
   }
+
+  // Trigger email notifications (internal alert + client auto-responder)
+  await sendContactFormNotification(input);
 
   return {
     success: true,

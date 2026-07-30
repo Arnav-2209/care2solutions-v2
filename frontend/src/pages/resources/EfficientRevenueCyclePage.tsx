@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSEO } from '../../utils/useSEO';
 import ResourceHero from '../../components/resource/ResourceHero';
 import ResourceCTA from '../../components/resource/ResourceCTA';
@@ -18,6 +19,8 @@ const WORKFLOW_STEPS = [
 ];
 
 export default function EfficientRevenueCyclePage() {
+  useEffect(() => { window.scrollTo(0, 0); }, []);
+
   useSEO(
     'A Practical Guide to a More Efficient Revenue Cycle | Care2Solutions',
     'Learn about key revenue cycle stages including eligibility, authorization, claims processing, payment posting, A/R follow-up, and denial management.',

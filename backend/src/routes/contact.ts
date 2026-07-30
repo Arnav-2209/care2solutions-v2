@@ -1,11 +1,29 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
 import { contactSchema } from '../schemas/contact';
 import { processContactInquiry } from '../services/contactService';
+import { verifyCaptcha } from '../utils/captcha';
 import { ZodError } from 'zod';
 
 export async function contactRoutes(app: FastifyInstance) {
-  app.post('/contact', async (request: FastifyRequest, reply: FastifyReply) => {
+  app.post('/contact', {
+    config: { rateLimit: { max: 5, timeWindow: '15 minutes' } },
+  }, async (request: FastifyRequest, reply: FastifyReply) => {
     try {
+      // 1. Verify CAPTCHA token before any processing
+      const body = request.body as Record<string, unknown>;
+      const captchaToken = typeof body?.captchaToken === 'string' ? body.captchaToken : undefined;
+      const captchaValid = await verifyCaptcha(captchaToken);
+      if (!captchaValid) {
+        return reply.status(400).send({
+          success: false,
+          error: {
+            code: 'CAPTCHA_FAILED',
+            message: 'CAPTCHA verification failed. Please complete the security check and try again.',
+          },
+        });
+      }
+
+      // 2. Validate payload with Zod
       const validatedInput = contactSchema.parse(request.body);
       const result = await processContactInquiry(validatedInput);
       return reply.status(200).send(result);
@@ -38,3 +56,4 @@ export async function contactRoutes(app: FastifyInstance) {
     }
   });
 }
+
