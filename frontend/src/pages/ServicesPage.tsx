@@ -228,18 +228,33 @@ export default function ServicesPage() {
       {/* ── Top Header Banner ─────────────────────────────────── */}
       <section className={styles.heroBanner} aria-label="Services header">
         <div className={styles.heroInner}>
-          <div className={styles.badge}>
+          <motion.div
+            className={styles.badge}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+          >
             <span className={styles.badgeDot} aria-hidden="true" />
             Healthcare Business Solutions
-          </div>
-          <h1 className={styles.title}>
+          </motion.div>
+          <motion.h1
+            className={styles.title}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          >
             Complete Healthcare{' '}
             <span className={styles.titleAccent}>Business Solutions</span>
-          </h1>
-          <p className={styles.subtitle}>
+          </motion.h1>
+          <motion.p
+            className={styles.subtitle}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          >
             Integrated healthcare solutions designed to streamline operations, improve efficiency,
             and optimize revenue for healthcare organizations.
-          </p>
+          </motion.p>
         </div>
       </section>
 
@@ -387,10 +402,10 @@ export default function ServicesPage() {
               <motion.div
                 key={card.title}
                 className={styles.supportCard}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.45, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 44, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: false, amount: 0.15 }}
+                transition={{ duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
               >
                 <div className={styles.supportCardHeader}>
                   <div className={styles.supportIconWrap}>

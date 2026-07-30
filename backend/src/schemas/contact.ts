@@ -7,6 +7,7 @@ export const contactSchema = z.object({
   practiceName: z.string().max(150, 'Practice name cannot exceed 150 characters').optional(),
   serviceNeeded: z.enum(['medical-billing', 'transcription', 'credentialing', 'rcm', 'other']),
   message: z.string().min(10, 'Message must be at least 10 characters').max(2000, 'Message cannot exceed 2000 characters'),
+  captchaToken: z.string().optional(),
 });
 
 export type ContactInput = z.infer<typeof contactSchema>;

@@ -162,10 +162,10 @@ export default function AboutSection() {
         {/* Section Header (Centered) */}
         <motion.div
           className={styles.header}
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 48 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className={styles.eyebrow}>
             <span className={styles.eyebrowDot} aria-hidden="true" />
@@ -185,10 +185,10 @@ export default function AboutSection() {
           {/* Left Column (60%): Why Choose Care2Solutions */}
           <motion.div
             className={styles.leftCol}
-            initial={{ opacity: 0, x: -24 }}
+            initial={{ opacity: 0, x: -56 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           >
             <h3 className={styles.leftHeading}>A Partner You Can Depend On</h3>
 
@@ -212,10 +212,10 @@ export default function AboutSection() {
                 return (
                   <motion.div
                     key={p.title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: idx * 0.08 }}
+                    initial={{ opacity: 0, y: 30, scale: 0.92 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: false, amount: 0.1 }}
+                    transition={{ duration: 0.5, delay: idx * 0.09, ease: [0.22, 1, 0.36, 1] }}
                     className={styles.pillarCard}
                   >
                     <div className={styles.pillarHeader}>
@@ -232,10 +232,10 @@ export default function AboutSection() {
 
             {/* FAQ Card — below trust pillars */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              viewport={{ once: false, amount: 0.1 }}
+              transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               className={styles.faqCardWrapper}
             >
               <FAQCard />
@@ -245,10 +245,10 @@ export default function AboutSection() {
           {/* Right Column (40%): One Premium Security & Compliance Card */}
           <motion.div
             className={styles.rightCol}
-            initial={{ opacity: 0, x: 24 }}
+            initial={{ opacity: 0, x: 56 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className={styles.securityCard}>
               <div className={styles.securityHeader}>
@@ -269,10 +269,10 @@ export default function AboutSection() {
                 {HIPAA_COMMITMENTS.map((c, idx) => (
                   <motion.div
                     key={c.title}
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: idx * 0.05 }}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false, amount: 0.1 }}
+                    transition={{ duration: 0.4, delay: idx * 0.06, ease: [0.22, 1, 0.36, 1] }}
                     className={styles.commitmentRow}
                   >
                     <div className={styles.checkIconCircle} aria-hidden="true">

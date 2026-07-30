@@ -70,6 +70,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Services',      href: '/services', isRoute: true },
   { label: 'Why Choose Us', href: '#why-us'       },
   { label: 'Your Journey',  href: '#journey'      },
+  { label: 'Resources',     href: '#resources'    },
   { label: 'Contact',       href: '#contact'      },
 ];
 
@@ -97,66 +98,50 @@ export default function Navbar() {
   }, [location.pathname]);
 
 
-  /* Scroll spy using IntersectionObserver (only on homepage) */
+  /* Scroll spy — position-based, fires reliably on every scroll tick */
   useEffect(() => {
     if (location.pathname !== '/') return;
 
-    const sectionIds = ['home', 'why-us', 'journey', 'contact'];
+    // All section IDs in page order (contact lives in the Footer)
+    const sectionIds = ['home', 'why-us', 'journey', 'resources', 'contact'];
+    const NAV_HEIGHT = 80;
 
-    const checkEdgeCases = (): boolean => {
-      if (isClickScrollingRef.current) return true;
+    const getActiveSection = (): string => {
+      // At the very top → Home
+      if (window.scrollY < NAV_HEIGHT) return '#home';
 
-      if (window.scrollY < 80) {
-        setActiveLink('#home');
-        return true;
-      }
+      // At the very bottom → Contact (footer)
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 60) return '#contact';
 
-      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 60) {
-        setActiveLink('#contact');
-        return true;
-      }
+      // getBoundingClientRect().top + scrollY = true document position
+      const scrollMid = window.scrollY + NAV_HEIGHT + 80;
 
-      return false;
-    };
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-80px 0px -45% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1.0],
-    };
-
-    const sectionElements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-
-    const observer = new IntersectionObserver((entries) => {
-      if (isClickScrollingRef.current) return;
-      if (checkEdgeCases()) return;
-
-      const visibleEntries = entries.filter((entry) => entry.isIntersecting);
-      if (visibleEntries.length > 0) {
-        visibleEntries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        const topMost = visibleEntries[0];
-        if (topMost && topMost.target.id) {
-          setActiveLink(`#${topMost.target.id}`);
+      let active = '#home';
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const docTop = el.getBoundingClientRect().top + window.scrollY;
+        if (docTop <= scrollMid) {
+          active = `#${id}`;
         }
       }
-    }, observerOptions);
-
-    sectionElements.forEach((el) => observer.observe(el));
+      return active;
+    };
 
     const onScroll = () => {
       setIsScrolled(window.scrollY > 60);
-      checkEdgeCases();
+      if (!isClickScrollingRef.current) {
+        setActiveLink(getActiveSection());
+      }
     };
+
+    // Set correct active on mount
+    onScroll();
 
     window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', onScroll);
-    };
+    return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
+
 
   /* Lock body scroll when drawer is open */
   useEffect(() => {
