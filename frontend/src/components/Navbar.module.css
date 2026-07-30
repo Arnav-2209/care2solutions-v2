@@ -12,7 +12,8 @@
   display: flex;
   justify-content: center;
   padding-top: var(--nav-top-margin);
-  pointer-events: none; /* allow clicks to pass through the wrapper gap */
+  pointer-events: none;
+  /* allow clicks to pass through the wrapper gap */
   transition: padding-top var(--transition-nav);
 }
 
