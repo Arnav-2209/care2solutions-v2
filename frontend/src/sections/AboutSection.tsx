@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   TrendingUp,
@@ -10,10 +10,6 @@ import {
   ShieldCheck,
   Shield,
   Lock,
-  GraduationCap,
-  FileText,
-  KeyRound,
-  CloudCheck,
   Check,
   FileCheck
 } from 'lucide-react';
@@ -57,6 +53,73 @@ const TRUST_PILLARS: Pillar[] = [
     sentence: 'Helping simplify day-to-day healthcare workflows.'
   }
 ];
+
+const FAQ_ITEMS = [
+  {
+    q: 'How do we get started with Care2Solutions?',
+    a: 'Schedule a consultation with our team. We\'ll assess your current workflow, understand your goals, and recommend services that fit your practice.',
+  },
+  {
+    q: 'Do you work with practices of different sizes?',
+    a: 'Yes. Our services are designed to support independent practices, clinics, physician groups, and larger healthcare organizations.',
+  },
+  {
+    q: 'How do you protect patient information?',
+    a: 'Patient privacy is a core priority. Our operational practices are designed around secure handling of Protected Health Information (PHI), controlled access, employee training, and HIPAA-aware workflows.',
+  },
+  {
+    q: 'Can your services be customized?',
+    a: 'Yes. Every healthcare organization has different operational needs, and our services are tailored accordingly.',
+  },
+];
+
+function FAQCard() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
+  const toggle = (idx: number) => {
+    setOpenIdx((prev) => (prev === idx ? null : idx));
+  };
+
+  return (
+    <div className={styles.faqCard}>
+      <div className={styles.faqCardHeader}>
+        <h3 className={styles.faqTitle}>Frequently Asked Questions</h3>
+        <p className={styles.faqSubtitle}>Quick answers to common questions about working with Care2Solutions.</p>
+      </div>
+      <div className={styles.faqList}>
+        {FAQ_ITEMS.map((item, idx) => {
+          const isOpen = openIdx === idx;
+          return (
+            <div key={idx} className={`${styles.faqItem} ${isOpen ? styles.faqItemOpen : ''}`}>
+              <button
+                className={styles.faqQuestion}
+                onClick={() => toggle(idx)}
+                aria-expanded={isOpen}
+                aria-controls={`faq-answer-${idx}`}
+                id={`faq-question-${idx}`}
+              >
+                <span className={styles.faqQuestionText}>{item.q}</span>
+                <span className={`${styles.faqChevron} ${isOpen ? styles.faqChevronOpen : ''}`} aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M4 6l4 4 4-4" />
+                  </svg>
+                </span>
+              </button>
+              <div
+                id={`faq-answer-${idx}`}
+                role="region"
+                aria-labelledby={`faq-question-${idx}`}
+                className={`${styles.faqAnswer} ${isOpen ? styles.faqAnswerOpen : ''}`}
+              >
+                <p className={styles.faqAnswerText}>{item.a}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
 interface Commitment {
   title: string;
@@ -166,6 +229,17 @@ export default function AboutSection() {
                 );
               })}
             </div>
+
+            {/* FAQ Card — below trust pillars */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className={styles.faqCardWrapper}
+            >
+              <FAQCard />
+            </motion.div>
           </motion.div>
 
           {/* Right Column (40%): One Premium Security & Compliance Card */}
