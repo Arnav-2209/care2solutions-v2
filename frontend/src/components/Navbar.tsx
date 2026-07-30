@@ -7,27 +7,10 @@ import styles from './Navbar.module.css';
    Inline SVG Icons (no external dependency)
    ────────────────────────────────────────────── */
 
+import C2SLogo from './C2SLogo';
+
 const OfficialLogo = () => (
-  <svg viewBox="0 0 240 54" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.officialLogoSvg} aria-hidden="true">
-    <g transform="translate(0, 3)">
-      <rect x="0" y="0" width="48" height="48" rx="14" fill="url(#c2s_official_logo_grad)" />
-      <path d="M24 12v24M12 24h24" stroke="white" strokeWidth="4" strokeLinecap="round" />
-      <path d="M14 32c3.5 3.5 9 4.5 13.5 1 4.5-3.5 8.5-2.5 10.5 1" stroke="rgba(255,255,255,0.75)" strokeWidth="2.5" strokeLinecap="round" />
-      <circle cx="36" cy="13" r="3.5" fill="#60A5FA" />
-    </g>
-    <text x="58" y="30" fontFamily="var(--font-display, 'Manrope', sans-serif)" fontWeight="800" fontSize="22" fill="#0F4C81" letterSpacing="-0.4">
-      Care<tspan fill="#2D9CDB">2</tspan>Solutions
-    </text>
-    <text x="58.5" y="44" fontFamily="var(--font-sans, 'Inter', sans-serif)" fontWeight="700" fontSize="8.5" fill="#64748B" letterSpacing="1.2">
-      HEALTHCARE RCM PLATFORM
-    </text>
-    <defs>
-      <linearGradient id="c2s_official_logo_grad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
-        <stop stopColor="#0F4C81" />
-        <stop offset="1" stopColor="#2D9CDB" />
-      </linearGradient>
-    </defs>
-  </svg>
+  <C2SLogo variant="light" height={44} />
 );
 
 const ChevronRightIcon = ({ className }: { className?: string }) => (
