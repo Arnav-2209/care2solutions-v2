@@ -51,3 +51,60 @@ export interface AuditQuoteResponse {
   message: string;
   requestId: string;
 }
+
+// ── Admin Lead Management ───────────────────────────────────
+
+export type LeadStatus = 'NEW' | 'CONTACTED' | 'IN_REVIEW' | 'QUALIFIED' | 'CLOSED';
+
+export interface AdminLoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface AdminLoginResponse {
+  success: boolean;
+  token: string;
+}
+
+export interface AdminListResponse<T> {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface ContactInquiry {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  practiceName?: string | null;
+  serviceNeeded: string;
+  message: string;
+  status: LeadStatus;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  referrerUrl?: string | null;
+  landingPage?: string | null;
+  createdAt: string;
+}
+
+export interface AdminAuditQuote {
+  id: string;
+  requestId: string;
+  providerName: string;
+  email: string;
+  phone: string;
+  specialty: string;
+  monthlyBillingVolume?: string | null;
+  notes?: string | null;
+  status: LeadStatus;
+  utmSource?: string | null;
+  utmMedium?: string | null;
+  utmCampaign?: string | null;
+  referrerUrl?: string | null;
+  landingPage?: string | null;
+  createdAt: string;
+}
